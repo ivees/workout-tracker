@@ -22,3 +22,20 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency {
+            // This ensures we are hitting the libraries before the build fails
+        }
+    }
+    
+    // Use 'forEach' on the root extensions to find the 'android' block
+    plugins.withType<com.android.build.gradle.api.AndroidBasePlugin> {
+        extensions.configure<com.android.build.gradle.BaseExtension>("android") {
+            if (namespace == null) {
+                namespace = project.group.toString()
+            }
+        }
+    }
+}
