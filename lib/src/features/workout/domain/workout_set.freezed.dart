@@ -23,9 +23,10 @@ mixin _$WorkoutSet {
 // Isar 3 uses 'Id' type for the primary key
   int get isarId => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
+  String get exerciseId => throw _privateConstructorUsedError;
   int get reps => throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
-  bool get isCompleted => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,7 +41,12 @@ abstract class $WorkoutSetCopyWith<$Res> {
       _$WorkoutSetCopyWithImpl<$Res, WorkoutSet>;
   @useResult
   $Res call(
-      {int isarId, String uuid, int reps, double weight, bool isCompleted});
+      {int isarId,
+      String uuid,
+      String exerciseId,
+      int reps,
+      double weight,
+      DateTime date});
 }
 
 /// @nodoc
@@ -58,9 +64,10 @@ class _$WorkoutSetCopyWithImpl<$Res, $Val extends WorkoutSet>
   $Res call({
     Object? isarId = null,
     Object? uuid = null,
+    Object? exerciseId = null,
     Object? reps = null,
     Object? weight = null,
-    Object? isCompleted = null,
+    Object? date = null,
   }) {
     return _then(_value.copyWith(
       isarId: null == isarId
@@ -71,6 +78,10 @@ class _$WorkoutSetCopyWithImpl<$Res, $Val extends WorkoutSet>
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String,
+      exerciseId: null == exerciseId
+          ? _value.exerciseId
+          : exerciseId // ignore: cast_nullable_to_non_nullable
+              as String,
       reps: null == reps
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
@@ -79,10 +90,10 @@ class _$WorkoutSetCopyWithImpl<$Res, $Val extends WorkoutSet>
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as double,
-      isCompleted: null == isCompleted
-          ? _value.isCompleted
-          : isCompleted // ignore: cast_nullable_to_non_nullable
-              as bool,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -96,7 +107,12 @@ abstract class _$$WorkoutSetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int isarId, String uuid, int reps, double weight, bool isCompleted});
+      {int isarId,
+      String uuid,
+      String exerciseId,
+      int reps,
+      double weight,
+      DateTime date});
 }
 
 /// @nodoc
@@ -112,9 +128,10 @@ class __$$WorkoutSetImplCopyWithImpl<$Res>
   $Res call({
     Object? isarId = null,
     Object? uuid = null,
+    Object? exerciseId = null,
     Object? reps = null,
     Object? weight = null,
-    Object? isCompleted = null,
+    Object? date = null,
   }) {
     return _then(_$WorkoutSetImpl(
       isarId: null == isarId
@@ -125,6 +142,10 @@ class __$$WorkoutSetImplCopyWithImpl<$Res>
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String,
+      exerciseId: null == exerciseId
+          ? _value.exerciseId
+          : exerciseId // ignore: cast_nullable_to_non_nullable
+              as String,
       reps: null == reps
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
@@ -133,10 +154,10 @@ class __$$WorkoutSetImplCopyWithImpl<$Res>
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as double,
-      isCompleted: null == isCompleted
-          ? _value.isCompleted
-          : isCompleted // ignore: cast_nullable_to_non_nullable
-              as bool,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -147,9 +168,10 @@ class _$WorkoutSetImpl extends _WorkoutSet {
   const _$WorkoutSetImpl(
       {this.isarId = Isar.autoIncrement,
       required this.uuid,
+      required this.exerciseId,
       this.reps = 0,
       this.weight = 0,
-      this.isCompleted = false})
+      required this.date})
       : super._();
 
   factory _$WorkoutSetImpl.fromJson(Map<String, dynamic> json) =>
@@ -162,18 +184,19 @@ class _$WorkoutSetImpl extends _WorkoutSet {
   @override
   final String uuid;
   @override
+  final String exerciseId;
+  @override
   @JsonKey()
   final int reps;
   @override
   @JsonKey()
   final double weight;
   @override
-  @JsonKey()
-  final bool isCompleted;
+  final DateTime date;
 
   @override
   String toString() {
-    return 'WorkoutSet(isarId: $isarId, uuid: $uuid, reps: $reps, weight: $weight, isCompleted: $isCompleted)';
+    return 'WorkoutSet(isarId: $isarId, uuid: $uuid, exerciseId: $exerciseId, reps: $reps, weight: $weight, date: $date)';
   }
 
   @override
@@ -183,16 +206,17 @@ class _$WorkoutSetImpl extends _WorkoutSet {
             other is _$WorkoutSetImpl &&
             (identical(other.isarId, isarId) || other.isarId == isarId) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.exerciseId, exerciseId) ||
+                other.exerciseId == exerciseId) &&
             (identical(other.reps, reps) || other.reps == reps) &&
             (identical(other.weight, weight) || other.weight == weight) &&
-            (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted));
+            (identical(other.date, date) || other.date == date));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, isarId, uuid, reps, weight, isCompleted);
+      Object.hash(runtimeType, isarId, uuid, exerciseId, reps, weight, date);
 
   @JsonKey(ignore: true)
   @override
@@ -212,9 +236,10 @@ abstract class _WorkoutSet extends WorkoutSet {
   const factory _WorkoutSet(
       {final int isarId,
       required final String uuid,
+      required final String exerciseId,
       final int reps,
       final double weight,
-      final bool isCompleted}) = _$WorkoutSetImpl;
+      required final DateTime date}) = _$WorkoutSetImpl;
   const _WorkoutSet._() : super._();
 
   factory _WorkoutSet.fromJson(Map<String, dynamic> json) =
@@ -225,11 +250,13 @@ abstract class _WorkoutSet extends WorkoutSet {
   @override
   String get uuid;
   @override
+  String get exerciseId;
+  @override
   int get reps;
   @override
   double get weight;
   @override
-  bool get isCompleted;
+  DateTime get date;
   @override
   @JsonKey(ignore: true)
   _$$WorkoutSetImplCopyWith<_$WorkoutSetImpl> get copyWith =>
