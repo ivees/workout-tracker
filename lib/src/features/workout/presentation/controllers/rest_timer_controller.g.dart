@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_router.dart';
+part of 'rest_timer_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerHash() => r'4e7ad086e507515b8b72c67ae2393e0f4df2104a';
+String _$restTimerHash() => r'2d529d1e21bb38705d8f91ce8c45b46245d07704';
 
-/// See also [router].
-@ProviderFor(router)
-final routerProvider = AutoDisposeProvider<GoRouter>.internal(
-  router,
-  name: r'routerProvider',
+/// See also [RestTimer].
+@ProviderFor(RestTimer)
+final restTimerProvider =
+    AutoDisposeNotifierProvider<RestTimer, RestTimerState>.internal(
+  RestTimer.new,
+  name: r'restTimerProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$routerHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$restTimerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef RouterRef = AutoDisposeProviderRef<GoRouter>;
+typedef _$RestTimer = AutoDisposeNotifier<RestTimerState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

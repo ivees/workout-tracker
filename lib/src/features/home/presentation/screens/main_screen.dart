@@ -62,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
         children: _screens,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {context.pushNamed('add-exercise');},
+        onPressed: () {context.pushNamed('exercise-category');},
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: CustomNavigationBar(

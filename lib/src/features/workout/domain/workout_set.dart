@@ -13,9 +13,10 @@ class WorkoutSet with _$WorkoutSet {
     // Isar 3 uses 'Id' type for the primary key
     @Default(Isar.autoIncrement) Id isarId,
     required String uuid,
+    required String exerciseId,
     @Default(0) int reps,
     @Default(0) double weight,
-    @Default(false) bool isCompleted,
+    required DateTime date,
   }) = _WorkoutSet;
 
   // 2. Add this getter so Isar can see the id property on the class level
