@@ -49,6 +49,10 @@ class ExerciseRepository {
       await isar.exercises.delete(id);
     });
   }
+
+  Stream<List<Exercise>> watchAllExercises() {
+    return isar.exercises.where().watch(fireImmediately: true);
+  }
 }
 
 @riverpod

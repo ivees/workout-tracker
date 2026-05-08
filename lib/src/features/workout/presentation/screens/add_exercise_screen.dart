@@ -195,10 +195,10 @@ class _PastPerformanceList extends ConsumerWidget {
 
 class _PerformanceCard extends StatelessWidget {
   final MapEntry<DateTime, List<WorkoutSet>> session;
-  final String exerciseDisplayName; // Received from parent
+  final String exerciseDisplayName;
 
   const _PerformanceCard({
-    required this.session, 
+    required this.session,
     required this.exerciseDisplayName,
   });
 
@@ -209,37 +209,35 @@ class _PerformanceCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
-        color: AppColors.surface, // Dark forest green from Screenshot 2026-04-17 163616.png
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white10, width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header: Date (Left) and Exercise Name (Right)
+          // 1. Header: Date and Exercise Name in one line
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                DateFormat('MMMM dd, yyyy').format(date).toUpperCase(),
+                DateFormat('MMM dd, yyyy').format(date),
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.1,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              // Dynamic Exercise Name
               Flexible(
                 child: Text(
-                  exerciseDisplayName.toUpperCase(), // Use passed name
+                  exerciseDisplayName.toUpperCase(),
                   textAlign: TextAlign.right,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: AppColors.primary, // Neon green from Screenshot 2026-04-17 163616.png
-                    fontSize: 14,
+                    color: AppColors.primary,
+                    fontSize: 13,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.0,
                   ),
@@ -249,11 +247,8 @@ class _PerformanceCard extends StatelessWidget {
           ),
           
           const SizedBox(height: 12),
-          // Neon Green Divider
-          const Divider(color: AppColors.primary, thickness: 1.5),
-          const SizedBox(height: 16),
           
-          // List of individual sets
+          // 2. Simplified Set List (The Gray Style)
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -261,26 +256,17 @@ class _PerformanceCard extends StatelessWidget {
             itemBuilder: (context, index) {
               final set = sets[index];
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // Gray style for the text
                     Text(
-                      "SET ${index + 1}",
+                      "Set ${index + 1}  •  ${set.weight.toStringAsFixed(0)} kg  x  ${set.reps} reps",
                       style: const TextStyle(
-                        color: Colors.white38, 
-                        fontWeight: FontWeight.bold
+                        color: Colors.white60, // The gray style
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    Row(
-                      children: [
-                        _buildStatText(set.weight.toStringAsFixed(0), "KG"),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Icon(Icons.close, color: AppColors.primary, size: 14),
-                        ),
-                        _buildStatText("${set.reps}", "REPS"),
-                      ],
                     ),
                   ],
                 ),
@@ -289,33 +275,6 @@ class _PerformanceCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  // Helper for the "25 KG" large text style
-  Widget _buildStatText(String value, String unit) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.baseline,
-      textBaseline: TextBaseline.alphabetic,
-      children: [
-        Text(
-          value,
-          style: const TextStyle(
-            color: Colors.white, 
-            fontSize: 22, 
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        const SizedBox(width: 4),
-        Text(
-          unit,
-          style: const TextStyle(
-            color: Colors.white38, 
-            fontSize: 10, 
-            fontWeight: FontWeight.bold
-          ),
-        ),
-      ],
     );
   }
 }

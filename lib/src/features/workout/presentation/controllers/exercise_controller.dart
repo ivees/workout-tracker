@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../data/exercise_repository.dart';
@@ -26,4 +27,14 @@ class ExerciseController extends _$ExerciseController {
     // in this category before deleting.
     await repository.deleteExercise(id); 
   }
+}
+
+@riverpod
+Stream<Map<String, String>> exerciseNameMap(Ref ref) {
+  // Assuming you have an exerciseRepositoryProvider that returns your ExerciseRepository
+  final repository = ref.watch(exerciseRepositoryProvider);
+  
+  return repository.watchAllExercises().map((exercises) {
+    return {for (var e in exercises) e.uuid: e.name};
+  });
 }

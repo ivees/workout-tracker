@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../controllers/exercise_list_controller.dart';
+import '../controllers/exercise_controller.dart';
 import '../../domain/exercise.dart';
 
 class ExerciseListTile extends ConsumerWidget {

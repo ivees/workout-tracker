@@ -1,13 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'exercise_list_controller.dart';
+part of 'exercise_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
+String _$exerciseNameMapHash() => r'2f7273e910594aef422c8ff05bfb7d60ff80dc3b';
+
+/// See also [exerciseNameMap].
+@ProviderFor(exerciseNameMap)
+final exerciseNameMapProvider =
+    AutoDisposeStreamProvider<Map<String, String>>.internal(
+  exerciseNameMap,
+  name: r'exerciseNameMapProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$exerciseNameMapHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ExerciseNameMapRef = AutoDisposeStreamProviderRef<Map<String, String>>;
 String _$exerciseControllerHash() =>
-    r'3e1a1fd4c2716e91ac0f64d61fabce4d26a80704';
+    r'7b2800b0534734991cbaca26126f97d1bc6f8aa4';
 
 /// Copied from Dart SDK
 class _SystemHash {

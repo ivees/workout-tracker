@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../controllers/exercise_list_controller.dart';
+import '../controllers/exercise_controller.dart';
 import '../widgets/exercise_list_tile.dart'; // We'll create this next
 
 class ExerciseListScreen extends ConsumerWidget {

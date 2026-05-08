@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:workout_tracker/src/features/workout/domain/workout_set.dart';
+import 'package:workout_tracker/src/features/workout/presentation/controllers/exercise_controller.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../controllers/calendar_controller.dart';
 
@@ -40,16 +42,43 @@ class CalendarScreen extends ConsumerWidget {
             ),
           ),
 
+          // Inside CalendarScreen build method, replace the Expanded child:
           Expanded(
             child: workoutsAsync.when(
-              data: (sets) => sets.isEmpty 
-                ? const Center(child: Text("No workouts tracked", style: TextStyle(color: Colors.white38)))
-                : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    itemCount: sets.length, // You might want to group these by exercise!
-                    itemBuilder: (context, index) => _WorkoutSummaryCard(workoutSet: sets[index]),
-                  ),
-              loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+              data: (sets) {
+                if (sets.isEmpty) {
+                  return const Center(
+                    child: Text("No workouts tracked",
+                        style: TextStyle(color: Colors.white38)),
+                  );
+                }
+
+                // Group sets by exerciseId or exercise name
+                final groupedWorkouts = <String, List<WorkoutSet>>{};
+                for (var set in sets) {
+                  // You can use set.exerciseId, but since we need the display name,
+                  // we'll assume your UI logic or repository provides it.
+                  // For now, we'll group by the exerciseId/Name.
+                  groupedWorkouts
+                      .putIfAbsent(set.exerciseId, () => [])
+                      .add(set);
+                }
+
+                final entries = groupedWorkouts.entries.toList();
+
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemCount: entries.length,
+                  itemBuilder: (context, index) {
+                    return _WorkoutSummaryCard(
+                      exerciseId: entries[index].key,
+                      sets: entries[index].value,
+                    );
+                  },
+                );
+              },
+              loading: () => const Center(
+                  child: CircularProgressIndicator(color: AppColors.primary)),
               error: (e, _) => Text('Error: $e'),
             ),
           ),
@@ -98,40 +127,71 @@ class CalendarScreen extends ConsumerWidget {
   }
 }
 
-class _WorkoutSummaryCard extends StatelessWidget {
-  final dynamic workoutSet; // Should be your WorkoutSet or a GroupedWorkout model
-  const _WorkoutSummaryCard({required this.workoutSet});
+class _WorkoutSummaryCard extends ConsumerWidget { // Changed to ConsumerWidget
+  final String exerciseId;
+  final List<WorkoutSet> sets;
+
+  const _WorkoutSummaryCard({
+    super.key,
+    required this.exerciseId,
+    required this.sets,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch the name map
+    final nameMapAsync = ref.watch(exerciseNameMapProvider);
+
+    // Resolve the name (fallback to 'Loading...' or 'Unknown')
+    final exerciseName = nameMapAsync.maybeWhen(
+      data: (map) => map[exerciseId] ?? "Unknown Exercise",
+      orElse: () => "...",
+    );
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white10, width: 0.5),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              borderRadius: BorderRadius.circular(8),
+          // 1. Dynamic Exercise Name
+          Text(
+            exerciseName.toUpperCase(), // Now dynamic!
+            style: const TextStyle(
+              color: AppColors.primary,
+              fontSize: 15,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.0,
             ),
-            child: const Icon(Icons.fitness_center, color: AppColors.primary),
           ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("Full Body Workout", // Placeholder
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-              const SizedBox(height: 4),
-              Text("10:00 AM - 11:00 AM", // Placeholder
-                style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 13)),
-            ],
-          )
+          
+          const SizedBox(height: 12),
+
+          // 2. Simplified Set List (The Gray Style)
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: sets.length,
+            itemBuilder: (context, index) {
+              final set = sets[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  "Set ${index + 1}  •  ${set.weight.toStringAsFixed(0)} kg  x  ${set.reps} reps",
+                  style: const TextStyle(
+                    color: Colors.white60,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
