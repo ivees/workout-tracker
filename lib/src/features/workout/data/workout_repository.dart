@@ -24,6 +24,18 @@ class WorkoutRepository {
         .sortByDateDesc()
         .watch(fireImmediately: true);
   }
+
+  Stream<List<WorkoutSet>> watchWorkoutsByDate(DateTime date) {
+    final startOfDay = DateTime(date.year, date.month, date.day);
+    final endOfDay = startOfDay.add(const Duration(days: 1));
+
+    return isar.workoutSets
+        .filter()
+        .dateGreaterThan(startOfDay.subtract(const Duration(milliseconds: 1)))
+        .and()
+        .dateLessThan(endOfDay)
+        .watch(fireImmediately: true);
+  }
 }
 
 @riverpod

@@ -177,7 +177,7 @@ class _GroupedPerformanceProviderElement
 }
 
 String _$addExerciseControllerHash() =>
-    r'961733903858b9e094dc01a799599a84f04c759f';
+    r'00bd2daffebf3035ebc7c5b6556cf75307784bdd';
 
 /// See also [AddExerciseController].
 @ProviderFor(AddExerciseController)

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:workout_tracker/src/common_widgets/custom_navigation_bar.dart';
+import 'package:workout_tracker/src/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:workout_tracker/src/features/workout/presentation/screens/today_workout_screen.dart';
-// Import your other feature screens here
-// import '../../calendar/presentation/screens/calendar_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -30,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const TodayWorkoutScreen(),
-    const Center(child: Text("Calendar")),
+    const CalendarScreen(),
     const Center(child: Text("Progress")),
     const Center(child: Text("Settings")),
   ];
